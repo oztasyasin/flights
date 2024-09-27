@@ -2,7 +2,6 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { create } from 'zustand';
 import { persist, createJSONStorage } from 'zustand/middleware';
 
-
 export const useFlightStore = create<FlightStore>()(
     persist(
         (set) => ({
@@ -17,7 +16,7 @@ export const useFlightStore = create<FlightStore>()(
 
             updateBookedFlight: (updatedData: BookedFlight) =>
                 set((state: FlightStore) => ({
-                    bookedFlights: state.bookedFlights.map((flight) =>
+                    bookedFlights: state.bookedFlights.map((flight: BookedFlight) =>
                         flight.id === updatedData.id ? updatedData : flight
                     ),
                 })),
@@ -25,7 +24,7 @@ export const useFlightStore = create<FlightStore>()(
             deleteBookedFlight: (flightId: string) =>
                 set((state: FlightStore) => ({
                     bookedFlights: state.bookedFlights.filter(
-                        (flight) => flight.id !== flightId
+                        (flight: BookedFlight) => flight.id !== flightId
                     ),
                 })),
         }),
