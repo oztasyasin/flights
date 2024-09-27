@@ -7,7 +7,7 @@ export const useFlightStore = create<FlightStore>()(
         (set) => ({
             flights: [],
             bookedFlights: [],
-            updateFlights: (data: FlightData[]) => set({ flights: data }),
+            updateFlights: (data: Flight[]) => set({ flights: data }),
 
             addNewBookedFlight: (data: BookedFlight) =>
                 set((state: FlightStore) => ({
