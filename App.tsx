@@ -1,11 +1,12 @@
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { QueryClient, QueryClientProvider } from 'react-query';
+const queryClient = new QueryClient();
 
 export default function App() {
-
   return (
-    <View style={styles.container}>
-
-    </View>
+    <QueryClientProvider client={queryClient}>
+      <></>
+    </QueryClientProvider>
   );
 }
 
