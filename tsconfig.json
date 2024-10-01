@@ -1,4 +1,10 @@
 {
-  "compilerOptions": {},
+  "compilerOptions": {
+    "esModuleInterop": true,
+    "forceConsistentCasingInFileNames": true,
+    "noUnusedLocals": true,
+    "strict": true,
+    "skipLibCheck": false
+  },
   "extends": "expo/tsconfig.base"
 }
