@@ -1,92 +1,78 @@
-// Main Flight List Model
-interface FlightList {
+import { RouteProp } from "@react-navigation/native";
+import { StackNavigationProp } from "@react-navigation/stack";
+import { ComponentType } from "react";
+
+export interface FlightList {
     flights?: Flight[];
 }
 
 
-// Aircraft Type Model
-interface AircraftTypeType {
+export interface AircraftTypeType {
     iataMain?: string;
     iataSub?: string;
 }
 
-// Baggage Claim Model
-interface BaggageClaimType {
+export interface BaggageClaimType {
     belts?: string[];
 }
 
-// Check-in Allocations Model
-interface CheckinAllocationsType {
+export interface CheckinAllocationsType {
     checkinAllocations?: CheckinAllocationType[];
     remarks?: RemarksType;
 }
 
-// Check-in Allocation Model
-interface CheckinAllocationType {
+export interface CheckinAllocationType {
     endTime?: string;
     rows?: RowsType;
     startTime?: string;
 }
 
-// Rows Model
-interface RowsType {
+export interface RowsType {
     rows?: RowType[];
 }
 
-// Row Model
-interface RowType {
+export interface RowType {
     position?: string;
     desks?: DesksType;
 }
 
-// Desks Model
-interface DesksType {
+export interface DesksType {
     desks?: DeskType[];
 }
 
-// Desk Model
-interface DeskType {
+export interface DeskType {
     checkinClass?: CheckinClassType;
     position?: number;
 }
 
-// Check-in Class Model
-interface CheckinClassType {
+export interface CheckinClassType {
     code?: string;
     description?: string;
 }
 
-// Codeshares Model
-interface CodesharesType {
+export interface CodesharesType {
     codeshares?: string[];
 }
 
-// Public Flight State Model
-interface PublicFlightStateType {
+export interface PublicFlightStateType {
     flightStates?: string[];
 }
 
-// Route Model
-interface RouteType {
+export interface RouteType {
     destinations?: string[];
     eu?: 'S' | 'E' | 'N';
     visa?: boolean;
 }
 
-// Transfer Positions Model
-interface TransferPositionsType {
+export interface TransferPositionsType {
     transferPositions?: number[];
 }
 
-// Remarks Model
-interface RemarksType {
+export interface RemarksType {
     remarks?: string[];
 }
 
-
-
-// Flight Model
-interface Flight {
+export interface Flight {
     lastUpdatedAt?: string;
     actualLandingTime?: string;
     actualOffBlockTime?: string;
@@ -124,21 +110,102 @@ interface Flight {
     schemaVersion?: string;
 }
 
-// Booked Flight Model
-interface BookedFlight {
+export interface FlightCardProps extends Flight {
+    onPress?: (data: Flight | BookedFlight) => void
+}
+
+export interface BookedFlight {
     id: string,
     flight: Flight,
     seatNumber?: string,
     createDate?: string,
 }
 
-// Flight Store Model
+export interface BookedFlightCardProps extends BookedFlight {
+    onPress?: (data: Flight | BookedFlight) => void
+}
 
-interface FlightStore {
+export interface RouteOptions {
+    gestureEnabled: boolean;
+}
+
+
+export interface RouteModel {
+    key: number;
+    name: string;
+    component: ComponentType<any>;
+    options?: RouteOptions;
+}
+
+
+type RootStackParamList = {
+    Onboarding: undefined;
+    Home: undefined;
+};
+
+type OnboardingScreenNavigationProp = StackNavigationProp<
+    RootStackParamList,
+    'Onboarding'
+>;
+
+export interface PageProps {
+    navigation: OnboardingScreenNavigationProp;
+}
+
+
+interface PublicName {
+    dutch?: string;
+    english?: string;
+}
+
+export interface Destination {
+    city?: string;
+    country?: string;
+    iata?: string;
+    publicName?: PublicName;
+}
+
+
+export interface FlightStore {
     flights: Flight[];
+    departureFlights: Flight[];
+    arivalFlights: Flight[];
+    destinations: Destination[];
     bookedFlights: BookedFlight[];
     updateFlights: (data: Flight[]) => void;
+    updateArivalFlights: (data: Flight[]) => void;
+    updateDepartureFlights: (data: Flight[]) => void;
     addNewBookedFlight: (data: BookedFlight) => void;
+    addNewDestination: (data: Destination) => void;
     updateBookedFlight: (updatedData: BookedFlight) => void;
     deleteBookedFlight: (flightId: string) => void;
+    updateBookedFlights: (data: BookedFlight[]) => void;
+    reset: () => void
+}
+
+export interface FlightHooksProps {
+    fetchParams?: any;
+    updateFunction: (data: Flight[]) => void;
+}
+
+export interface FlightInfoRowProps {
+    label: string;
+    value?: string | number;
+    end?: boolean;
+}
+
+export interface RenderToastProps {
+    type?: 'success' | 'error';
+    text1?: string | undefined | null;
+    text2?: string | undefined | null;
+}
+
+export type NavigationProps<T extends keyof RootStackParamList> = {
+    navigation: StackNavigationProp<RootStackParamList, T>;
+    route: RouteProp<RootStackParamList, T>;
+};
+
+export interface QRScanResult {
+    type: string;
+    data: string;
 }
