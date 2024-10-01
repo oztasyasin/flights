@@ -1,6 +1,5 @@
 import {
     Animated,
-    Dimensions,
     NativeSyntheticEvent,
     Text,
     StyleSheet,
@@ -16,8 +15,7 @@ import React, {
 import { isEmpty } from '../../helper';
 import { borderColor, customInputStyles, errorColor } from './styles';
 import { CustomInputProps } from './props';
-
-const fullWidth = Dimensions.get('window').width;
+import { fullWidth } from '../../data';
 
 const CustomInput: React.FC<CustomInputProps> = ({
     error,
@@ -28,10 +26,10 @@ const CustomInput: React.FC<CustomInputProps> = ({
     textContentType = 'oneTimeCode',
     ...restProps }) => {
 
-    const left = useState(new Animated.Value(-150))[0];
-    const right = useState(new Animated.Value(-fullWidth))[0];
-    const frameRef = useRef<View>();
-    const inputRef = useRef<TextInput>();
+    const left = useState<Animated.Value>(new Animated.Value(-150))[0];
+    const right = useState<Animated.Value>(new Animated.Value(-fullWidth))[0];
+    const frameRef = useRef<View>(null);
+    const inputRef = useRef<TextInput>(null);
     const containerStyleProps = StyleSheet.flatten(containerStyle);
     const errorTextStypeProps = StyleSheet.flatten(errorTextStyle);
     const baseBorderColor = containerStyleProps?.borderColor ? containerStyleProps?.borderColor.toString() : borderColor;
@@ -61,7 +59,7 @@ const CustomInput: React.FC<CustomInputProps> = ({
         }
         updateFrameStyle(error ? baseErrorColor : baseBorderColor);
         changePlaceholder(!isEmpty(restProps.value));
-        restProps.onBlur && restProps?.onBlur(e);
+        restProps?.onBlur && restProps?.onBlur(e);
     };
 
     const changePlaceholder = (hide: boolean) => {

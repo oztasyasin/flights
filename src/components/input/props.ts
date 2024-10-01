@@ -16,3 +16,9 @@ export interface CustomInputProps extends TextInputProps {
     },
 }
 
+export interface CustomTimePickerProps extends CustomInputProps {
+    timeFormat?: string;
+    minimumDate?: Date;
+    maximumDate?: Date,
+    onTimeChange?: (time: string) => void;
+}
