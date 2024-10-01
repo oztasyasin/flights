@@ -12,9 +12,11 @@ import BottomSheet, { BottomSheetView } from '@gorhom/bottom-sheet';
 import CustomButton from '../../components/button';
 import { useFlightStore } from '../../store/flights';
 import { FlightInfoRow } from '../../components/cards/FlightCard';
+import { useNavigation } from '@react-navigation/native';
 
-const SeatSelect = ({ route, navigation }) => {
+const SeatSelect = ({ route }) => {
     const { flight } = route?.params;
+    const navigation = useNavigation();
     const [selectedSeat, setSelectedSeat] = useState<string>("");
     const isArival = flight.flightDirection === 'A';
     const { addNewBookedFlight, bookedFlights } = useFlightStore();
@@ -41,6 +43,7 @@ const SeatSelect = ({ route, navigation }) => {
     }
 
     const handleApprove = () => {
+        closeSheet();
         addNewBookedFlight({
             id: bookedFlights ? (bookedFlights?.length + 1).toString() : "0",
             flight: flight,
@@ -48,7 +51,7 @@ const SeatSelect = ({ route, navigation }) => {
             createDate: new Date().toISOString()
         })
         renderToast({ type: 'success', text2: "Seat has been booked successfully" })
-        navigation.navigate("Profile");
+        navigation.navigate('Profile');
     }
 
     useEffect(() => {

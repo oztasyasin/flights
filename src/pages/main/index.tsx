@@ -1,9 +1,10 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import { BottomTabBarProps, createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { mainTabsRoutes } from './routes';
 import CustomTabBar from '../../components/navigation/CustomTabBar';
 import { themeColors } from '../../data/colors';
 import GradientHeader from '../../components/shared/Header';
+import { useFlightStore } from '../../store/flights';
 const MainTab = createBottomTabNavigator();
 const Main = () => {
     // const { reset } = useFlightStore()
@@ -28,7 +29,7 @@ const Main = () => {
                 }}
                 tabBar={(props: BottomTabBarProps) => <CustomTabBar {...props} />}
             >
-                {mainTabsRoutes?.map((tab) => <MainTab.Screen {...tab} />)}
+                {mainTabsRoutes?.map((tab) => <MainTab.Screen options={{unmountOnBlur:true}} {...tab} />)}
             </MainTab.Navigator>
         </>
 

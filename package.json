@@ -20,7 +20,7 @@
     "@react-navigation/stack": "^6.4.1",
     "@types/react": "~18.2.79",
     "axios": "^1.7.7",
-    "expo": "~51.0.28",
+    "expo": "~51.0.35",
     "expo-barcode-scanner": "~13.0.1",
     "expo-blur": "~13.0.2",
     "expo-camera": "~15.0.16",

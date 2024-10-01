@@ -20,6 +20,7 @@ const FutureFlights = () => {
     return (
         <BookedFlightList
             data={futureItems}
+            keyExtractor={(item: BookedFlight, index: number) => `${item.id}_${index}`}
             renderItem={renderFlight}
         />
     )

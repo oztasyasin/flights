@@ -29,7 +29,10 @@ const FlightCard = (props: FlightCardProps) => {
     const [isExpanded, setIsExpanded] = useState<boolean>(false);
     const height = useSharedValue<number>(heightValues.min);
     const borderRadius = useSharedValue<number>(0);
-
+    const handlePress = () => {
+        const { onPress, ...flightData } = props;
+        props.onPress && props.onPress({ ...flightData })
+    }
     const toggleExpand = () => {
         height.value = withTiming(isExpanded ? heightValues.min : heightValues.max, {
             duration: 300,
@@ -45,7 +48,7 @@ const FlightCard = (props: FlightCardProps) => {
     return (
         <Animated.View style={[styles.frame, { height, borderBottomLeftRadius: borderRadius, borderBottomRightRadius: borderRadius }]}>
             <View style={styles.touchFrame}>
-                <TouchableOpacity onPress={() => props.onPress && props.onPress({ ...props })} disabled={isArival} style={styles.topFrame}>
+                <TouchableOpacity onPress={handlePress} disabled={isArival} style={styles.topFrame}>
                     <View style={styles.pointsFrame}>
                         <Text style={globalStyles.txt19_700_normal_057}>{departurePoint}</Text>
                         <Text style={{ ...globalStyles.txt14_500_21_028, color: themeColors.subText }}>{"Destination"}</Text>
@@ -67,7 +70,7 @@ const FlightCard = (props: FlightCardProps) => {
                         {isExpanded ? <CaretUp color={themeColors.subText} size={12} weight='bold' /> : <CaretDown color={themeColors.subText} size={12} weight='bold' />}
                     </TouchableOpacity>
                 </View>
-                <TouchableOpacity onPress={() => props.onPress && props.onPress({ ...props })} disabled={isArival} style={styles.bottom}>
+                <TouchableOpacity onPress={handlePress} disabled={isArival} style={styles.bottom}>
                     <View style={styles.infoRows}>
                         <FlightInfoRow label="Flight Number" value={props.flightNumber} />
                         <FlightInfoRow end label="Flight Code" value={props.flightName} />

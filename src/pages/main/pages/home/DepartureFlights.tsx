@@ -10,9 +10,10 @@ const DepartureFlights = () => {
     const { navigate } = useNavigation();
     const handlePress = (flight: Flight) => {
         navigate('SeatSelect', { flight })
+        
     }
     const { departureFlights, refetch, isLoading } = useGetDepartureFlights();
-    const renderFlight = ({ item }: { item: Flight }) => <FlightCard onPress={handlePress} {...item} />;
+    const renderFlight = ({ item }: { item: Flight }) => <FlightCard onPress={(data: Flight) => handlePress(data)} {...item} />;
     return (
         <FlightList
             refreshControl={<RefreshControl onRefresh={refetch} refreshing={isLoading && isEmpty(departureFlights)} />}
