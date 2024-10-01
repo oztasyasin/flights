@@ -1,22 +1,29 @@
-import { StyleSheet } from 'react-native';
 import { QueryClient, QueryClientProvider } from 'react-query';
-const queryClient = new QueryClient();
+import RoutesContainer from './src/routes/RoutesContainer';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
+import { useFontsLoader } from './src/hooks/useFontsLoader';
+import Toast from 'react-native-toast-message';
+import CustomToaster from './src/components/toaster';
 
+const queryClient = new QueryClient();
+const toastConfig = {
+  success: (props) => <CustomToaster {...props} type={"success"} />,
+  error: (props) => <CustomToaster {...props} type={"error"} />,
+}
 export default function App() {
+
+  const { loaded, error } = useFontsLoader();
+
+  if (!loaded && !error) return null;
+
   return (
     <QueryClientProvider client={queryClient}>
-      <></>
+      <SafeAreaProvider>
+        <RoutesContainer />
+        <Toast
+          config={toastConfig}
+          position='bottom' />
+      </SafeAreaProvider>
     </QueryClientProvider>
   );
 }
-
-const styles = StyleSheet.create({
-  container: {
-    paddingHorizontal: 24,
-    rowGap: 12,
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
